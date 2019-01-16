@@ -1,0 +1,76 @@
+<html>
+
+<head>
+
+	<title>React</title>
+
+</head>
+
+<body>
+
+	<div id = "root"></div>
+
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<script type="text/babel">
+
+	class Chungus extends React.Component {
+
+		constructor(props) {
+
+			super(props);
+
+			this.state = {
+				name: null
+			}
+		}
+
+		render() {
+			return (
+				<div> {this.state.name} </div>
+			)
+		}
+
+		componentDidMount() {
+
+			var thisChungus = this;
+
+		 	var xhr = new XMLHttpRequest();
+			xhr.open('GET', 'https://en.wikipedia.org/wiki/Special:Random');
+			xhr.onload = function() {
+			    if (xhr.status === 200) {
+			        
+			        console.log(xhr.response);
+
+			        let body = xhr.responseText;
+
+		        	let tagRegex = /<title>[^<]+<\/title>/gi;
+
+			        let title = body.match(tagRegex)[0];
+
+			        title = title.substring(7, title.length - 8);
+
+			        thisChungus.setState(
+			        	{ "name" : title }
+			        );
+			    }
+			    else {
+			        console.log('Request failed.  Returned status of ' + xhr.status);
+			    }
+			};
+			xhr.send();
+	
+		} // END componentDidMount()
+
+	}
+
+	ReactDOM.render(<Chungus />, document.getElementById("root"));
+
+
+</script>	
+
+</body>
+
+</html>
