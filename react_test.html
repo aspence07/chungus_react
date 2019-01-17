@@ -43,6 +43,21 @@
 				}
 			);
 
+			let foo = {};
+
+			// demonstrate difference between 'this' in arrow function vs traditional function
+			// succeeds because 'this' still refers to Chungus instance
+			foo.bar = () => {
+				this.setState({name: "MegaChungus"});
+			};
+
+			// fails because 'this' refers to foo here
+			// foo.bar = function() {
+			// 	this.setState({name: "MegaChungus"});
+			// }
+
+			foo.bar();
+
 		 // 	var xhr = new XMLHttpRequest();
 			// xhr.open('GET', 'https://en.wikipedia.org/wiki/Special:Random');
 			// xhr.onload = function() {
