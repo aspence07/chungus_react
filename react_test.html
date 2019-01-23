@@ -16,6 +16,40 @@
 
 <script type="text/babel">
 
+	class MiniChungus extends React.Component {
+
+		constructor(props) {
+
+			super(props);
+
+			this.state = {
+				inputVal: "",
+				parent: props.parent
+			}
+
+			this.handleChange = this.handleChange.bind(this);
+		}
+
+		handleChange(event) {
+			this.setState({inputVal : event.target.value});
+			this.state.parent.foo(this.state.inputVal);
+		}
+
+		render() {
+
+			return (
+
+				<div>
+					I'm a MiniChungus named {this.state.inputVal}<br />
+					<input type="text" onChange={this.handleChange} value={this.state.inputVal} />
+				</div>
+
+			);
+
+		}
+
+	} // END MiniChungus
+
 	class Chungus extends React.Component {
 
 		constructor(props) {
@@ -23,14 +57,26 @@
 			super(props);
 
 			this.state = {
-				name: null
+				name: null,
+				miniChungusName: null,
 			}
 		}
 
+		foo(name) {
+			//console.log("foo");
+
+			this.setState({ miniChungusName: name });
+		}
+
+
 		render() {
 			return (
-				<div> {this.state.name} </div>
-			)
+				<div>
+					<div> I'm a Big Chungus named {this.state.name} </div>
+					<div> My MiniChungus is named {this.state.miniChungusName} </div>
+					<MiniChungus parent={this} />
+				</div>
+			);
 		}
 
 		componentDidMount() {
@@ -39,49 +85,9 @@
 
 			this.setState(
 				{
-					name: "Chungus"
+					name: "MegaChungus"
 				}
 			);
-
-			let foo = {};
-
-			// demonstrate difference between 'this' in arrow function vs traditional function
-			// succeeds because 'this' still refers to Chungus instance
-			foo.bar = () => {
-				this.setState({name: "MegaChungus"});
-			};
-
-			// fails because 'this' refers to foo here
-			// foo.bar = function() {
-			// 	this.setState({name: "MegaChungus"});
-			// }
-
-			foo.bar();
-
-		 // 	var xhr = new XMLHttpRequest();
-			// xhr.open('GET', 'https://en.wikipedia.org/wiki/Special:Random');
-			// xhr.onload = function() {
-			//     if (xhr.status === 200) {
-			        
-			//         console.log(xhr.response);
-
-			//         let body = xhr.responseText;
-
-		 //        	let tagRegex = /<title>[^<]+<\/title>/gi;
-
-			//         let title = body.match(tagRegex)[0];
-
-			//         title = title.substring(7, title.length - 8);
-
-			//         thisChungus.setState(
-			//         	{ "name" : title }
-			//         );
-			//     }
-			//     else {
-			//         console.log('Request failed.  Returned status of ' + xhr.status);
-			//     }
-			// };
-			// xhr.send();
 	
 		} // END componentDidMount()
 
