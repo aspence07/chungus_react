@@ -32,7 +32,7 @@
 
 		handleChange(event) {
 			this.setState({inputVal : event.target.value});
-			this.state.parent.foo(this.state.inputVal);
+			this.state.parent.foo(event.target.value);
 		}
 
 		render() {
